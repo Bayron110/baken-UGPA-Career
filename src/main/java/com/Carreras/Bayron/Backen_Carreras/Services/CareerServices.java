@@ -12,36 +12,30 @@ import java.util.Optional;
 public class CareerServices {
 
     @Autowired
-    private CareerRespository careerRespository;
+    private CareerRespository careerRepository;
 
-    public Career guardarCarrera(Career career){
-        return careerRespository.save(career);
-    }
-    public List<Career> obtenerTodasLasCarreras() {
-        return careerRespository.findAll();
+    public List<Career> findAll() {
+        return careerRepository.findAll();
     }
 
-    // Obtener una carrera por ID
-    public Optional<Career> obtenerCarreraPorId(Long id) {
-        return careerRespository.findById(id);
+    public Optional<Career> findById(Long id) {
+        return careerRepository.findById(id);
     }
 
-    // Editar el nombre de una carrera
-    public Career editarCarrera(Long id, String nuevoNombre) {
-        return careerRespository.findById(id)
-                .map(carrera -> {
-                    carrera.setNombre(nuevoNombre);
-                    return careerRespository.save(carrera);
+    public Career save(Career career) {
+        return careerRepository.save(career);
+    }
+
+    public Career update(Long id, Career updatedCareer) {
+        return careerRepository.findById(id)
+                .map(career -> {
+                    career.setNombre(updatedCareer.getNombre());
+                    return careerRepository.save(career);
                 })
-                .orElseThrow(() -> new RuntimeException("Carrera no encontrada con ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Career no encontrado con id: " + id));
     }
 
-    // Eliminar una carrera por ID
-    public void eliminarCarrera(Long id) {
-        if (careerRespository.existsById(id)) {
-            careerRespository.deleteById(id);
-        } else {
-            throw new RuntimeException("No se puede eliminar. Carrera no encontrada con ID: " + id);
-        }
+    public void deleteById(Long id) {
+        careerRepository.deleteById(id);
     }
 }

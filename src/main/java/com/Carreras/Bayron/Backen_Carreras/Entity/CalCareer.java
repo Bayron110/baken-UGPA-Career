@@ -1,75 +1,42 @@
 package com.Carreras.Bayron.Backen_Carreras.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "CalCareer")
 public class CalCareer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "TypeCareer_Tipo", length = 45)
-    private String typeCareerTipo;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "career_id", nullable = false)
+    private Career career;
 
-    @Column(name = "TypeCareer_Duracion(Semanas)", length = 45)
-    private String typeCareerDuracion;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "type_career_id", nullable = false)
+    private TypeCareer typeCareer;
 
-    @Column(name = "Career_id")
-    private Integer careerId;
+    @Column(name = "fecha_actual", nullable = false)
+    private LocalDate fechaActual;
 
-    @Column(name = "fecha_actual", length = 45)
-    private String fechaActual;
+    @Column(name = "fecha_fin")
+    private LocalDate fechaFin;
 
-    @Column(name = "fecha_final", length = 45)
-    private String fechaFinal;
+    public CalCareer() {}
 
-    // Getters y setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTypeCareerTipo() {
-        return typeCareerTipo;
-    }
-
-    public void setTypeCareerTipo(String typeCareerTipo) {
-        this.typeCareerTipo = typeCareerTipo;
-    }
-
-    public String getTypeCareerDuracion() {
-        return typeCareerDuracion;
-    }
-
-    public void setTypeCareerDuracion(String typeCareerDuracion) {
-        this.typeCareerDuracion = typeCareerDuracion;
-    }
-
-    public Integer getCareerId() {
-        return careerId;
-    }
-
-    public void setCareerId(Integer careerId) {
-        this.careerId = careerId;
-    }
-
-    public String getFechaActual() {
-        return fechaActual;
-    }
-
-    public void setFechaActual(String fechaActual) {
-        this.fechaActual = fechaActual;
-    }
-
-    public String getFechaFinal() {
-        return fechaFinal;
-    }
-
-    public void setFechaFinal(String fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
+    // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Career getCareer() { return career; }
+    public void setCareer(Career career) { this.career = career; }
+    public TypeCareer getTypeCareer() { return typeCareer; }
+    public void setTypeCareer(TypeCareer typeCareer) { this.typeCareer = typeCareer; }
+    public LocalDate getFechaActual() { return fechaActual; }
+    public void setFechaActual(LocalDate fechaActual) { this.fechaActual = fechaActual; }
+    public LocalDate getFechaFin() { return fechaFin; }
+    public void setFechaFin(LocalDate fechaFin) { this.fechaFin = fechaFin; }
 }

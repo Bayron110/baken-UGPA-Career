@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CalCareerRepository extends JpaRepository<CalCareer, Long> {
-}
+public interface CalCareerRepository extends JpaRepository<CalCareer, Long> {}

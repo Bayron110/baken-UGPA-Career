@@ -14,24 +14,29 @@ public class TypeCareerService {
     @Autowired
     private TypeCareerRepository typeCareerRepository;
 
-    // 🔹 Crear nueva carrera
-    public TypeCareer guardar(TypeCareer carrera) {
-        return typeCareerRepository.save(carrera);
-    }
-
-    // 🔹 Obtener todas las carreras
-    public List<TypeCareer> listarTodas() {
+    public List<TypeCareer> findAll() {
         return typeCareerRepository.findAll();
     }
 
-
-    // 🔹 Actualizar carrera
-    public TypeCareer actualizar(TypeCareer carrera) {
-        return typeCareerRepository.save(carrera);
+    public Optional<TypeCareer> findById(Long id) {
+        return typeCareerRepository.findById(id);
     }
 
-    // 🔹 Eliminar por ID
-    public void eliminar(Long id) {
+    public TypeCareer save(TypeCareer typeCareer) {
+        return typeCareerRepository.save(typeCareer);
+    }
+
+    public TypeCareer update(Long id, TypeCareer updatedTypeCareer) {
+        return typeCareerRepository.findById(id)
+                .map(typeCareer -> {
+                    typeCareer.setTipo(updatedTypeCareer.getTipo());
+                    typeCareer.setDuracion(updatedTypeCareer.getDuracion());
+                    return typeCareerRepository.save(typeCareer);
+                })
+                .orElseThrow(() -> new RuntimeException("TypeCareer no encontrado con id: " + id));
+    }
+
+    public void deleteById(Long id) {
         typeCareerRepository.deleteById(id);
     }
 }

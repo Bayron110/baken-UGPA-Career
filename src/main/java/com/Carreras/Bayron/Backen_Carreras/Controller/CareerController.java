@@ -14,14 +14,29 @@ public class CareerController {
     @Autowired
     private CareerServices careerServices;
 
-    // Endpoint para guardar una carrera
-    @PostMapping
-    public Career guardarCarrera(@RequestBody Career career) {
-        return careerServices.guardarCarrera(career);
-    }
-    // Endpoint para obtener todas las carreras
     @GetMapping
-    public List<Career> obtenerCarreras() {
-        return careerServices.obtenerTodasLasCarreras();
+    public List<Career> getAllCareers() {
+        return careerServices.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Career getCareerById(@PathVariable Long id) {
+        return careerServices.findById(id)
+                .orElseThrow(() -> new RuntimeException("Carrera no encontrada con ID: " + id));
+    }
+
+    @PostMapping
+    public Career createCareer(@RequestBody Career career) {
+        return careerServices.save(career);
+    }
+
+    @PutMapping("/{id}")
+    public Career updateCareer(@PathVariable Long id, @RequestBody Career career) {
+        return careerServices.update(id, career);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCareer(@PathVariable Long id) {
+        careerServices.deleteById(id);
     }
 }
