@@ -1,0 +1,91 @@
+package com.Carreras.Bayron.Backen_Carreras.Controller;
+
+import com.Carreras.Bayron.Backen_Carreras.Entity.AxlesSuperior;
+import com.Carreras.Bayron.Backen_Carreras.Services.AxlesSuperiorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+public class AxlesSuperiorController {
+
+    private final AxlesSuperiorService axlesSuperiorService;
+
+    @Autowired
+    public AxlesSuperiorController(AxlesSuperiorService axlesSuperiorService) {
+        this.axlesSuperiorService = axlesSuperiorService;
+    }
+
+    // Obtener todos los registros
+    @GetMapping("/axles-superior")
+    public ResponseEntity<List<AxlesSuperior>> getAll() {
+        try {
+            List<AxlesSuperior> axles = axlesSuperiorService.findAll();
+            return ResponseEntity.ok(axles);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // Obtener por ID
+    @GetMapping("/axles-superior/{id}")
+    public ResponseEntity<AxlesSuperior> getById(@PathVariable Long id) {
+        try {
+            Optional<AxlesSuperior> axle = axlesSuperiorService.findById(id);
+            return axle.map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // Crear o actualizar
+    @PostMapping("/axles-superior")
+    public ResponseEntity<AxlesSuperior> save(@RequestBody AxlesSuperior axlesSuperior) {
+        try {
+            AxlesSuperior savedAxle = axlesSuperiorService.save(axlesSuperior);
+            return ResponseEntity.ok(savedAxle);
+        } catch (Exception e) {
+            System.err.println("Error guardando axle: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // Eliminar por ID
+    @DeleteMapping("/axles-superior/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            if (axlesSuperiorService.findById(id).isPresent()) {
+                axlesSuperiorService.deleteById(id);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // Buscar por calCareerId
+    @GetMapping("/axles-superior/career/{calCareerId}")
+    public ResponseEntity<List<AxlesSuperior>> getByCalCareerId(@PathVariable Long calCareerId) {
+        try {
+            List<AxlesSuperior> axles = axlesSuperiorService.findByCalCareerId(calCareerId);
+            return ResponseEntity.ok(axles);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // Endpoint de prueba para verificar que el servidor responde
+    @GetMapping("/axles-superior/health")
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("AxlesSuperior Controller is working!");
+    }
+}
