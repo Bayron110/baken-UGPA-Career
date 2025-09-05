@@ -1,7 +1,6 @@
 package com.Carreras.Bayron.Backen_Carreras.Controller;
 
 import com.Carreras.Bayron.Backen_Carreras.Entity.TypeCareer;
-
 import com.Carreras.Bayron.Backen_Carreras.Services.TypeCareerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class TypeCareerController {
     }
 
     @GetMapping("/{id}")
-    public TypeCareer getTypeCareerById(@PathVariable Long id) {
+    public TypeCareer getTypeCareerById(@PathVariable String id) {
         return typeCareerService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tipo de carrera no encontrado con ID: " + id));
     }
@@ -32,12 +31,12 @@ public class TypeCareerController {
     }
 
     @PutMapping("/{id}")
-    public TypeCareer updateTypeCareer(@PathVariable Long id, @RequestBody TypeCareer typeCareer) {
+    public TypeCareer updateTypeCareer(@PathVariable String id, @RequestBody TypeCareer typeCareer) {
         return typeCareerService.update(id, typeCareer);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTypeCareer(@PathVariable Long id) {
+    public void deleteTypeCareer(@PathVariable String id) {
         typeCareerService.deleteById(id);
     }
 }

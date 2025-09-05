@@ -20,7 +20,7 @@ public class CareerController {
     }
 
     @GetMapping("/{id}")
-    public Career getCareerById(@PathVariable Long id) {
+    public Career getCareerById(@PathVariable String id) {
         return careerServices.findById(id)
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada con ID: " + id));
     }
@@ -31,12 +31,12 @@ public class CareerController {
     }
 
     @PutMapping("/{id}")
-    public Career updateCareer(@PathVariable Long id, @RequestBody Career career) {
+    public Career updateCareer(@PathVariable String id, @RequestBody Career career) {
         return careerServices.update(id, career);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCareer(@PathVariable Long id) {
+    public void deleteCareer(@PathVariable String id) {
         careerServices.deleteById(id);
     }
 }

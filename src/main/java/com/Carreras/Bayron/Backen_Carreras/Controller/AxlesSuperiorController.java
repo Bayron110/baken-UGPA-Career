@@ -21,7 +21,6 @@ public class AxlesSuperiorController {
         this.axlesSuperiorService = axlesSuperiorService;
     }
 
-    // Obtener todos los registros
     @GetMapping("/axles-superior")
     public ResponseEntity<List<AxlesSuperior>> getAll() {
         try {
@@ -32,9 +31,8 @@ public class AxlesSuperiorController {
         }
     }
 
-    // Obtener por ID
     @GetMapping("/axles-superior/{id}")
-    public ResponseEntity<AxlesSuperior> getById(@PathVariable Long id) {
+    public ResponseEntity<AxlesSuperior> getById(@PathVariable String id) {
         try {
             Optional<AxlesSuperior> axle = axlesSuperiorService.findById(id);
             return axle.map(ResponseEntity::ok)
@@ -44,22 +42,19 @@ public class AxlesSuperiorController {
         }
     }
 
-    // Crear o actualizar
     @PostMapping("/axles-superior")
     public ResponseEntity<AxlesSuperior> save(@RequestBody AxlesSuperior axlesSuperior) {
         try {
             AxlesSuperior savedAxle = axlesSuperiorService.save(axlesSuperior);
             return ResponseEntity.ok(savedAxle);
         } catch (Exception e) {
-            System.err.println("Error guardando axle: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    // Eliminar por ID
     @DeleteMapping("/axles-superior/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         try {
             if (axlesSuperiorService.findById(id).isPresent()) {
                 axlesSuperiorService.deleteById(id);
@@ -72,9 +67,8 @@ public class AxlesSuperiorController {
         }
     }
 
-    // Buscar por calCareerId
     @GetMapping("/axles-superior/career/{calCareerId}")
-    public ResponseEntity<List<AxlesSuperior>> getByCalCareerId(@PathVariable Long calCareerId) {
+    public ResponseEntity<List<AxlesSuperior>> getByCalCareerId(@PathVariable String calCareerId) {
         try {
             List<AxlesSuperior> axles = axlesSuperiorService.findByCalCareerId(calCareerId);
             return ResponseEntity.ok(axles);
@@ -83,7 +77,6 @@ public class AxlesSuperiorController {
         }
     }
 
-    // Endpoint de prueba para verificar que el servidor responde
     @GetMapping("/axles-superior/health")
     public ResponseEntity<String> healthCheck() {
         return ResponseEntity.ok("AxlesSuperior Controller is working!");

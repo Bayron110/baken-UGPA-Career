@@ -18,7 +18,7 @@ public class TypeCareerService {
         return typeCareerRepository.findAll();
     }
 
-    public Optional<TypeCareer> findById(Long id) {
+    public Optional<TypeCareer> findById(String id) {
         return typeCareerRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class TypeCareerService {
         return typeCareerRepository.save(typeCareer);
     }
 
-    public TypeCareer update(Long id, TypeCareer updatedTypeCareer) {
+    public TypeCareer update(String id, TypeCareer updatedTypeCareer) {
         return typeCareerRepository.findById(id)
                 .map(typeCareer -> {
                     typeCareer.setTipo(updatedTypeCareer.getTipo());
@@ -36,7 +36,7 @@ public class TypeCareerService {
                 .orElseThrow(() -> new RuntimeException("TypeCareer no encontrado con id: " + id));
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         typeCareerRepository.deleteById(id);
     }
 }

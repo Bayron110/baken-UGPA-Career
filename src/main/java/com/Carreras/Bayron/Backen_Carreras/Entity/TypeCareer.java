@@ -1,57 +1,34 @@
 package com.Carreras.Bayron.Backen_Carreras.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Document(collection = "type_careers")
 public class TypeCareer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(unique = true)
     private String tipo;
-
     private Integer duracion;
 
-    @OneToMany(mappedBy = "typeCareer", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
+    @DBRef
     private List<CalCareer> calCareers = new ArrayList<>();
 
     // Getters y Setters
-    public Long getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public String getTipo() {
-        return tipo;
-    }
+    public Integer getDuracion() { return duracion; }
+    public void setDuracion(Integer duracion) { this.duracion = duracion; }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public Integer getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(Integer duracion) {
-        this.duracion = duracion;
-    }
-
-    public List<CalCareer> getCalCareers() {
-        return calCareers;
-    }
-
-    public void setCalCareers(List<CalCareer> calCareers) {
-        this.calCareers = calCareers;
-    }
+    public List<CalCareer> getCalCareers() { return calCareers; }
+    public void setCalCareers(List<CalCareer> calCareers) { this.calCareers = calCareers; }
 }

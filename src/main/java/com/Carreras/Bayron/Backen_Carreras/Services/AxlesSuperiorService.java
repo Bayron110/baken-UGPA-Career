@@ -24,7 +24,7 @@ public class AxlesSuperiorService {
     }
 
     // Obtener por ID
-    public Optional<AxlesSuperior> findById(Long id) {
+    public Optional<AxlesSuperior> findById(String id) {
         return axlesSuperiorRepository.findById(id);
     }
 
@@ -34,12 +34,11 @@ public class AxlesSuperiorService {
     }
 
     // Eliminar por ID
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         axlesSuperiorRepository.deleteById(id);
     }
-
-    // Buscar por calCareerId
-    public List<AxlesSuperior> findByCalCareerId(Long calCareerId) {
+    public List<AxlesSuperior> findByCalCareerId(String calCareerId) {
         return axlesSuperiorRepository.findByCalCareerId(calCareerId);
     }
+
 }

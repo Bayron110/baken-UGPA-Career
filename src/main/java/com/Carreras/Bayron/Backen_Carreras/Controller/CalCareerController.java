@@ -17,7 +17,7 @@ public class CalCareerController {
     public List<CalCareer> getAllCalCareers() { return calCareerService.findAll(); }
 
     @GetMapping("/{id}")
-    public CalCareer getCalCareerById(@PathVariable Long id) {
+    public CalCareer getCalCareerById(@PathVariable String id) {
         return calCareerService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Registro CalCareer no encontrado con ID: " + id));
     }
@@ -28,12 +28,12 @@ public class CalCareerController {
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public CalCareer updateCalCareer(@PathVariable Long id, @RequestBody CalCareer calCareer) {
+    public CalCareer updateCalCareer(@PathVariable String id, @RequestBody CalCareer calCareer) {
         return calCareerService.update(id, calCareer);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCalCareer(@PathVariable Long id) {
+    public void deleteCalCareer(@PathVariable String id) {
         calCareerService.deleteById(id);
     }
 }

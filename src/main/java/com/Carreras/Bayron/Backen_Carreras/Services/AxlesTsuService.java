@@ -18,28 +18,23 @@ public class AxlesTsuService {
         this.axlesTsuRepository = axlesTsuRepository;
     }
 
-    // Obtener todos los registros
     public List<AxlesTsu> findAll() {
         return axlesTsuRepository.findAll();
     }
 
-    // Obtener por ID
-    public Optional<AxlesTsu> findById(Long id) {
+    public Optional<AxlesTsu> findById(String id) {
         return axlesTsuRepository.findById(id);
     }
 
-    // Guardar o actualizar
     public AxlesTsu save(AxlesTsu axlesTsu) {
         return axlesTsuRepository.save(axlesTsu);
     }
 
-    // Eliminar por ID
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         axlesTsuRepository.deleteById(id);
     }
 
-    // Buscar por calCareerId (si aplica)
-    public List<AxlesTsu> findByCalCareerId(Long calCareerId) {
+    public List<AxlesTsu> findByCalCareerId(String calCareerId) {
         return axlesTsuRepository.findByCalCareerId(calCareerId);
     }
 }

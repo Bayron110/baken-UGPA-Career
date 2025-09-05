@@ -6,6 +6,7 @@ import com.Carreras.Bayron.Backen_Carreras.Repository.CalCareerRepository;
 import com.Carreras.Bayron.Backen_Carreras.Repository.TypeCareerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,8 @@ public class CalCareerService {
     private TypeCareerRepository typeCareerRepository;
 
     public List<CalCareer> findAll() { return calCareerRepository.findAll(); }
-    public Optional<CalCareer> findById(Long id) { return calCareerRepository.findById(id); }
+
+    public Optional<CalCareer> findById(String id) { return calCareerRepository.findById(id); }
 
     public CalCareer save(CalCareer calCareer) {
         if (calCareer.getTypeCareer() == null || calCareer.getTypeCareer().getId() == null) {
@@ -32,7 +34,7 @@ public class CalCareerService {
         return calCareerRepository.save(calCareer);
     }
 
-    public CalCareer update(Long id, CalCareer updatedCalCareer) {
+    public CalCareer update(String id, CalCareer updatedCalCareer) {
         return calCareerRepository.findById(id)
                 .map(calCareer -> {
                     calCareer.setCareer(updatedCalCareer.getCareer());
@@ -44,5 +46,5 @@ public class CalCareerService {
                 .orElseThrow(() -> new RuntimeException("CalCareer no encontrado con id: " + id));
     }
 
-    public void deleteById(Long id) { calCareerRepository.deleteById(id); }
+    public void deleteById(String id) { calCareerRepository.deleteById(id); }
 }
