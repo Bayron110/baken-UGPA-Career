@@ -39,4 +39,5 @@ public class CareerController {
     public void deleteCareer(@PathVariable String id) {
         careerServices.deleteById(id);
     }
+
 }

@@ -4,6 +4,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+
 @Document(collection = "axles_tsu")
 public class AxlesTsu {
 
@@ -11,14 +15,35 @@ public class AxlesTsu {
     private String id;
 
     @DBRef
+    @NotNull(message = "La referencia a CalCareer no puede ser nula")
     private CalCareer calCareer;
 
+    @NotBlank(message = "El nivel no puede estar vacío")
+    @Size(min = 2, max = 100, message = "El nivel debe tener entre 2 y 50 caracteres")
     private String nivel;
+
+    @NotBlank(message = "Eje 1 no puede estar vacío")
+    @Size(min = 3, max = 10000, message = "Eje 1 debe tener entre 3 y 100 caracteres")
     private String eje1;
+
+    @NotBlank(message = "Eje 2 no puede estar vacío")
+    @Size(min = 3, max = 10000, message = "Eje 2 debe tener entre 3 y 100 caracteres")
     private String eje2;
+
+    @NotBlank(message = "Eje 3 no puede estar vacío")
+    @Size(min = 3, max = 10000, message = "Eje 3 debe tener entre 3 y 100 caracteres")
     private String eje3;
+
+    @NotBlank(message = "Eje 4 no puede estar vacío")
+    @Size(min = 3, max = 10000, message = "Eje 4 debe tener entre 3 y 100 caracteres")
     private String eje4;
+
+    @NotBlank(message = "Eje 5 no puede estar vacío")
+    @Size(min = 3, max = 10000, message = "Eje 5 debe tener entre 3 y 100 caracteres")
     private String eje5;
+
+    @NotBlank(message = "Eje 6 no puede estar vacío")
+    @Size(min = 3, max = 10000, message = "Eje 6 debe tener entre 3 y 100 caracteres")
     private String eje6;
 
     // Getters y Setters
