@@ -3,12 +3,12 @@ package com.Carreras.Bayron.Backen_Carreras.Entity;
 import jakarta.validation.constraints.Min;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +24,22 @@ public class Career {
     @Size(min = 3, max = 1000, message = "El nombre debe tener entre 3 y 100 caracteres")
     private String nombre;
 
-    @NotBlank(message = "No puede estar sin Capacitación")
-    private String capacitacion;
+    // ⭐ CAMBIO: De String a List<String>
+    @NotNull(message = "La lista de capacitaciones no puede ser nula")
+    @NotEmpty(message = "Debe tener al menos una capacitación")
+    private List<String> capacitaciones = new ArrayList<>();
 
-    @NotNull(message = "El numero de horas debe superior a 30")
-    @Min(value= 30,message = "El numero de horas debe ser de minimo 30")
+    @NotNull(message = "El número de horas debe ser superior a 30")
+    @Min(value = 30, message = "El número de horas debe ser de mínimo 30")
     private Integer horas;
 
     @NotBlank(message = "No puede estar en blanco la duración")
     private String duracion;
+
     @NotBlank(message = "No puede estar sin periodo")
     private String periodo;
-    @NotBlank(message = "Es obligatorio que sea de tipo generica o especifica")
+
+    @NotBlank(message = "Es obligatorio que sea de tipo genérica o específica")
     private String tipo;
 
     @NotNull(message = "La lista de calificaciones no puede ser nula")
@@ -58,20 +62,13 @@ public class Career {
         this.nombre = nombre;
     }
 
-    public List<CalCareer> getCalCareers() {
-        return calCareers;
+    // ⭐ NUEVO: Getter y Setter para List<String>
+    public List<String> getCapacitaciones() {
+        return capacitaciones;
     }
 
-    public void setCalCareers(List<CalCareer> calCareers) {
-        this.calCareers = calCareers;
-    }
-
-    public String getCapacitacion() {
-        return capacitacion;
-    }
-
-    public void setCapacitacion(String capacitación) {
-        this.capacitacion = capacitación;
+    public void setCapacitaciones(List<String> capacitaciones) {
+        this.capacitaciones = capacitaciones;
     }
 
     public Integer getHoras() {
@@ -86,8 +83,8 @@ public class Career {
         return duracion;
     }
 
-    public void setDuracion(String duración) {
-        this.duracion = duración;
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
     }
 
     public String getPeriodo() {
@@ -104,5 +101,13 @@ public class Career {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public List<CalCareer> getCalCareers() {
+        return calCareers;
+    }
+
+    public void setCalCareers(List<CalCareer> calCareers) {
+        this.calCareers = calCareers;
     }
 }

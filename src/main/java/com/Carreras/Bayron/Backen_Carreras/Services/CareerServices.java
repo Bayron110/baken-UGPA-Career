@@ -1,7 +1,6 @@
 package com.Carreras.Bayron.Backen_Carreras.Services;
 
 import com.Carreras.Bayron.Backen_Carreras.Entity.Career;
-
 import com.Carreras.Bayron.Backen_Carreras.Repository.CareerRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,8 @@ public class CareerServices {
         return careerRepository.findById(id)
                 .map(career -> {
                     career.setNombre(updatedCareer.getNombre());
-                    career.setCapacitacion(updatedCareer.getCapacitacion());
+                    // ⭐ CAMBIO: Ahora actualiza la lista de capacitaciones
+                    career.setCapacitaciones(updatedCareer.getCapacitaciones());
                     career.setHoras(updatedCareer.getHoras());
                     career.setPeriodo(updatedCareer.getPeriodo());
                     career.setDuracion(updatedCareer.getDuracion());
