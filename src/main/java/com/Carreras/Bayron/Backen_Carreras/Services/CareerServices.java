@@ -32,10 +32,7 @@ public class CareerServices {
                     career.setNombre(updatedCareer.getNombre());
                     // ⭐ CAMBIO: Ahora actualiza la lista de capacitaciones
                     career.setCapacitaciones(updatedCareer.getCapacitaciones());
-                    career.setHoras(updatedCareer.getHoras());
-                    career.setPeriodo(updatedCareer.getPeriodo());
-                    career.setDuracion(updatedCareer.getDuracion());
-                    career.setTipo(updatedCareer.getTipo());
+                    career.setCapacitaciones(updatedCareer.getCapacitaciones());
                     return careerRepository.save(career);
                 })
                 .orElseThrow(() -> new RuntimeException("Career no encontrado con id: " + id));
