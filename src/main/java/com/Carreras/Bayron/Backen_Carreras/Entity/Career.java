@@ -25,14 +25,14 @@ public class Career {
     private String nombre;
 
     @NotBlank(message = "No puede estar sin Capacitación")
-    private String capacitación;
+    private String capacitacion;
 
     @NotNull(message = "El numero de horas debe superior a 30")
     @Min(value= 30,message = "El numero de horas debe ser de minimo 30")
     private Integer horas;
 
     @NotBlank(message = "No puede estar en blanco la duración")
-    private String duración;
+    private String duracion;
     @NotBlank(message = "No puede estar sin periodo")
     private String periodo;
     @NotBlank(message = "Es obligatorio que sea de tipo generica o especifica")
@@ -66,12 +66,12 @@ public class Career {
         this.calCareers = calCareers;
     }
 
-    public String getCapacitación() {
-        return capacitación;
+    public String getCapacitacion() {
+        return capacitacion;
     }
 
-    public void setCapacitación(String capacitación) {
-        this.capacitación = capacitación;
+    public void setCapacitacion(String capacitación) {
+        this.capacitacion = capacitación;
     }
 
     public Integer getHoras() {
@@ -82,12 +82,12 @@ public class Career {
         this.horas = horas;
     }
 
-    public String getDuración() {
-        return duración;
+    public String getDuracion() {
+        return duracion;
     }
 
-    public void setDuración(String duración) {
-        this.duración = duración;
+    public void setDuracion(String duración) {
+        this.duracion = duración;
     }
 
     public String getPeriodo() {

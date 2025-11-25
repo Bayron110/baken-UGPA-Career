@@ -31,10 +31,10 @@ public class CareerServices {
         return careerRepository.findById(id)
                 .map(career -> {
                     career.setNombre(updatedCareer.getNombre());
-                    career.setCapacitación(updatedCareer.getCapacitación());
+                    career.setCapacitacion(updatedCareer.getCapacitacion());
                     career.setHoras(updatedCareer.getHoras());
                     career.setPeriodo(updatedCareer.getPeriodo());
-                    career.setDuración(updatedCareer.getDuración());
+                    career.setDuracion(updatedCareer.getDuracion());
                     career.setTipo(updatedCareer.getTipo());
                     return careerRepository.save(career);
                 })
