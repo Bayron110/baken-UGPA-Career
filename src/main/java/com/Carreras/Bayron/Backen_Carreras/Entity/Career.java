@@ -1,5 +1,6 @@
 package com.Carreras.Bayron.Backen_Carreras.Entity;
 
+import jakarta.validation.constraints.Min;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -22,6 +23,20 @@ public class Career {
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 3, max = 1000, message = "El nombre debe tener entre 3 y 100 caracteres")
     private String nombre;
+
+    @NotBlank(message = "No puede estar sin Capacitación")
+    private String capacitación;
+
+    @NotNull(message = "El numero de horas debe superior a 30")
+    @Min(value= 30,message = "El numero de horas debe ser de minimo 30")
+    private Integer horas;
+
+    @NotBlank(message = "No puede estar en blanco la duración")
+    private String duración;
+    @NotBlank(message = "No puede estar sin periodo")
+    private String periodo;
+    @NotBlank(message = "Es obligatorio que sea de tipo generica o especifica")
+    private String tipo;
 
     @NotNull(message = "La lista de calificaciones no puede ser nula")
     private List<@NotNull CalCareer> calCareers = new ArrayList<>();
@@ -49,5 +64,45 @@ public class Career {
 
     public void setCalCareers(List<CalCareer> calCareers) {
         this.calCareers = calCareers;
+    }
+
+    public String getCapacitación() {
+        return capacitación;
+    }
+
+    public void setCapacitación(String capacitación) {
+        this.capacitación = capacitación;
+    }
+
+    public Integer getHoras() {
+        return horas;
+    }
+
+    public void setHoras(Integer horas) {
+        this.horas = horas;
+    }
+
+    public String getDuración() {
+        return duración;
+    }
+
+    public void setDuración(String duración) {
+        this.duración = duración;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

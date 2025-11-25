@@ -37,6 +37,7 @@ public class TypeCareerService {
     }
 
     public void deleteById(String id) {
+
         typeCareerRepository.deleteById(id);
     }
 }
