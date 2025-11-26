@@ -19,7 +19,7 @@ public class DocenteController {
         return docenteService.save(docente);
     }
 
-    @GetMapping("/carrera/{carreraId}")
+    @GetMapping("{carreraId}")
     public List<Docente> getByCarrera(@PathVariable String carreraId) {
         return docenteService.findByCarrera(carreraId);
     }
