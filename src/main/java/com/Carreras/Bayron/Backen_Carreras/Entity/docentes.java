@@ -1,11 +1,10 @@
 package com.Carreras.Bayron.Backen_Carreras.Entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Document(collection = "docentes")
 public class docentes {
@@ -13,59 +12,49 @@ public class docentes {
     @Id
     private String id;
 
-    @NotBlank
-    @Size(min = 5, max = 120)
-    private String nombresCompletos;
-
-    @NotBlank
     @Indexed(unique = true)
-    @Size(min = 10, max = 10)
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    private String nombre;
+
+    private String carreraId;
+
+    // 🔹 Nuevos campos
+    @NotBlank(message = "La cédula no puede estar vacía")
     private String cedula;
 
-    @NotBlank
-    private String formacionActual;
+    @NotBlank(message = "La formación no puede estar vacía")
+    private String formacion; // Ej: "Ingeniería", "Licenciatura"
 
-    @NotBlank
-    private String nivel;
+    private String programa; // Ej: "Maestría en Educación", "Doctorado en Ciencias"
 
-    @NotBlank
-    private String universidad;
+    private String estado;   // Ej: "Cursando", "Finalizado"
 
-    @NotBlank
-    private String estado; // En curso / Finalizado
+    private String periodo;  // Ej: "2022-2024", "2021-I"
 
-    @NotBlank
-    private String periodo; // Ej: 2018-2022
+    // ====== Getters y Setters ======
 
-    // 🔥 RELACIÓN CON CARRERA
-    @NotBlank
-    private String careerId;
-
-    // Getters y Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
-    public String getNombresCompletos() { return nombresCompletos; }
-    public void setNombresCompletos(String nombresCompletos) { this.nombresCompletos = nombresCompletos; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getCarreraId() { return carreraId; }
+    public void setCarreraId(String carreraId) { this.carreraId = carreraId; }
 
     public String getCedula() { return cedula; }
     public void setCedula(String cedula) { this.cedula = cedula; }
 
-    public String getFormacionActual() { return formacionActual; }
-    public void setFormacionActual(String formacionActual) { this.formacionActual = formacionActual; }
+    public String getFormacion() { return formacion; }
+    public void setFormacion(String formacion) { this.formacion = formacion; }
 
-    public String getNivel() { return nivel; }
-    public void setNivel(String nivel) { this.nivel = nivel; }
-
-    public String getUniversidad() { return universidad; }
-    public void setUniversidad(String universidad) { this.universidad = universidad; }
+    public String getPrograma() { return programa; }
+    public void setPrograma(String programa) { this.programa = programa; }
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
 
     public String getPeriodo() { return periodo; }
     public void setPeriodo(String periodo) { this.periodo = periodo; }
-
-    public String getCareerId() { return careerId; }
-    public void setCareerId(String careerId) { this.careerId = careerId; }
 }

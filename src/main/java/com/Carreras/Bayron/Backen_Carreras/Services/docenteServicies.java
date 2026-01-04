@@ -14,49 +14,35 @@ public class docenteServicies {
     @Autowired
     private docentesRepository docentesRepository;
 
-    // ✅ Crear docente (valida cédula única)
-    public docentes crearDocente(docentes docente) {
-        Optional<docentes> existente = docentesRepository.findByCedula(docente.getCedula());
-        if (existente.isPresent()) {
-            throw new RuntimeException("Ya existe un docente con esa cédula");
-        }
+    // Crear o actualizar un docente
+    public docentes saveDocente(docentes docente) {
         return docentesRepository.save(docente);
     }
 
-    // ✅ Actualizar docente
-    public docentes actualizarDocente(String id, docentes docente) {
-        docentes existente = docentesRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
-
-        existente.setNombresCompletos(docente.getNombresCompletos());
-        existente.setCedula(docente.getCedula());
-        existente.setFormacionActual(docente.getFormacionActual());
-        existente.setNivel(docente.getNivel());
-        existente.setUniversidad(docente.getUniversidad());
-        existente.setEstado(docente.getEstado());
-        existente.setPeriodo(docente.getPeriodo());
-        existente.setCareerId(docente.getCareerId());
-
-        return docentesRepository.save(existente);
-    }
-
-    // ✅ Obtener todos
-    public List<docentes> obtenerTodos() {
+    // Obtener todos los docentes
+    public List<docentes> getAllDocentes() {
         return docentesRepository.findAll();
     }
 
-    // ✅ Obtener por ID
-    public Optional<docentes> obtenerPorId(String id) {
+    // Buscar docente por ID
+    public Optional<docentes> getDocenteById(String id) {
         return docentesRepository.findById(id);
     }
 
-    // ✅ Obtener por carrera
-    public List<docentes> obtenerPorCarrera(String careerId) {
-        return docentesRepository.findByCareerId(careerId);
-    }
-
-    // ✅ Eliminar
-    public void eliminar(String id) {
+    // Eliminar docente por ID
+    public void deleteDocente(String id) {
         docentesRepository.deleteById(id);
     }
+
+    // Verificar si existe un docente por nombre (ejemplo adicional)
+    public boolean existsByNombre(String nombre) {
+        return docentesRepository.findAll()
+                .stream()
+                .anyMatch(d -> d.getNombre().equalsIgnoreCase(nombre));
+    }
+
+    public List<docentes> getDocentesByCarrera(String carreraId) {
+        return docentesRepository.findByCarreraId(carreraId);
+    }
+
 }
