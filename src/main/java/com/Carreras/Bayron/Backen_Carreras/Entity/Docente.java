@@ -1,6 +1,7 @@
 package com.Carreras.Bayron.Backen_Carreras.Entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,10 +16,15 @@ public class Docente {
     private String nombre;
 
     @NotBlank(message = "La carrera es obligatoria")
-    private String carreraId; // Relación con Career
+    private String carreraId;
+    @NotBlank(message = "La formación es obligatoria")
+    private String formacion;
 
-    @NotNull(message = "La participación es obligatoria")
-    private Boolean participacionCapacitacion = false;
+    @NotBlank(message = "La cédula es obligatoria")
+    @Indexed(unique = true)
+    private String cedula;
+
+
 
     // Getters y Setters
     public String getId() { return id; }
@@ -30,8 +36,19 @@ public class Docente {
     public String getCarreraId() { return carreraId; }
     public void setCarreraId(String carreraId) { this.carreraId = carreraId; }
 
-    public Boolean getParticipacionCapacitacion() { return participacionCapacitacion; }
-    public void setParticipacionCapacitacion(Boolean participacionCapacitacion) {
-        this.participacionCapacitacion = participacionCapacitacion;
+    public String getFormacion() {
+        return formacion;
+    }
+
+    public void setFormacion(String formacion) {
+        this.formacion = formacion;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        cedula = cedula;
     }
 }

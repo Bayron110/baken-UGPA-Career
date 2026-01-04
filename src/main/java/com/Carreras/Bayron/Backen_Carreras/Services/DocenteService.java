@@ -21,10 +21,8 @@ public class DocenteService {
         return docenteRepository.findByCarreraId(carreraId);
     }
 
-    public Docente toggleParticipacion(String id) {
-        Docente docente = docenteRepository.findById(id)
+    public Docente findById(String id) {
+        return docenteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
-        docente.setParticipacionCapacitacion(!docente.getParticipacionCapacitacion());
-        return docenteRepository.save(docente);
     }
 }
