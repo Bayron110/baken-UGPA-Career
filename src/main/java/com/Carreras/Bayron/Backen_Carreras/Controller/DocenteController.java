@@ -21,32 +21,26 @@ public class DocenteController {
     @Autowired
     private DocenteExcelService docenteExcelService;
 
-    // Crear docente manual
     @PostMapping
     public Docente create(@RequestBody Docente docente) {
         return docenteService.save(docente);
     }
 
-    // Obtener docentes por carrera
     @GetMapping("/carrera/{carreraId}")
     public List<Docente> getByCarrera(@PathVariable String carreraId) {
         return docenteService.findByCarrera(carreraId);
     }
 
-    // Obtener docente por id
     @GetMapping("/{id}")
     public Docente getById(@PathVariable String id) {
         return docenteService.findById(id);
     }
 
-    // 🔥 CARGAR DOCENTES DESDE EXCEL
     @PostMapping(
             value = "/cargar-excel",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public List<Docente> cargarExcel(
-            @RequestParam("file") MultipartFile file
-    ) {
+    public List<Docente> cargarExcel(@RequestParam("file") MultipartFile file) {
         return docenteExcelService.cargarDesdeExcel(file);
     }
 }

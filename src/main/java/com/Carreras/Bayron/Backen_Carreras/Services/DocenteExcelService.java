@@ -7,8 +7,10 @@ import com.Carreras.Bayron.Backen_Carreras.Repository.DocenteRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class DocenteExcelService {
 
     public List<Docente> cargarDesdeExcel(MultipartFile file) {
 
-        List<Docente> docentesGuardados = new ArrayList<>();
+        List<Docente> docentes = new ArrayList<>();
 
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
 
@@ -35,17 +37,24 @@ public class DocenteExcelService {
                 Row row = sheet.getRow(i);
                 if (row == null) continue;
 
-                String nombre = row.getCell(0).getStringCellValue().trim();
-                String cedula = row.getCell(1).getStringCellValue().trim();
-                String formacion = row.getCell(2).getStringCellValue().trim();
-                String carreraNombre = row.getCell(3).getStringCellValue().trim();
+                String nombre = getCellValue(row.getCell(0));
+                String cedula = getCellValue(row.getCell(1));
+                String formacion = getCellValue(row.getCell(2));
+                String carreraNombre = getCellValue(row.getCell(3));
 
-                Career career = careerRepository.findByNombre(carreraNombre)
+                if (nombre.isEmpty() || cedula.isEmpty()) continue;
+
+                Career career = careerRepository
+                        .findByNombreIgnoreCase(carreraNombre.trim())
                         .orElseThrow(() ->
-                                new RuntimeException("Carrera no existe: " + carreraNombre)
+                                new ResponseStatusException(
+                                        HttpStatus.BAD_REQUEST,
+                                        "Carrera no existe: " + carreraNombre
+                                )
                         );
 
-                Docente docente = docenteRepository.findByCedula(cedula)
+                Docente docente = docenteRepository
+                        .findByCedula(cedula)
                         .orElse(new Docente());
 
                 docente.setNombre(nombre);
@@ -53,13 +62,26 @@ public class DocenteExcelService {
                 docente.setFormacion(formacion);
                 docente.setCarreraId(career.getId());
 
-                docentesGuardados.add(docenteRepository.save(docente));
+                docentes.add(docenteRepository.save(docente));
             }
 
+        } catch (ResponseStatusException e) {
+            throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Error procesando el archivo Excel", e);
+            e.printStackTrace();
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Error procesando el archivo Excel"
+            );
         }
 
-        return docentesGuardados;
+        return docentes;
+    }
+
+    // 🔒 MÉTODO SEGURO PARA EXCEL
+    private String getCellValue(Cell cell) {
+        if (cell == null) return "";
+        cell.setCellType(CellType.STRING);
+        return cell.getStringCellValue().trim();
     }
 }

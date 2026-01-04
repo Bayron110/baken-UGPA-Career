@@ -4,7 +4,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Document(collection = "docentes")
 public class Docente {
@@ -12,11 +11,12 @@ public class Docente {
     @Id
     private String id;
 
-    @NotBlank(message = "El nombre del docente no puede estar vacío")
+    @NotBlank(message = "El nombre del docente es obligatorio")
     private String nombre;
 
     @NotBlank(message = "La carrera es obligatoria")
     private String carreraId;
+
     @NotBlank(message = "La formación es obligatoria")
     private String formacion;
 
@@ -24,9 +24,7 @@ public class Docente {
     @Indexed(unique = true)
     private String cedula;
 
-
-
-    // Getters y Setters
+    // GETTERS & SETTERS
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -36,19 +34,9 @@ public class Docente {
     public String getCarreraId() { return carreraId; }
     public void setCarreraId(String carreraId) { this.carreraId = carreraId; }
 
-    public String getFormacion() {
-        return formacion;
-    }
+    public String getFormacion() { return formacion; }
+    public void setFormacion(String formacion) { this.formacion = formacion; }
 
-    public void setFormacion(String formacion) {
-        this.formacion = formacion;
-    }
-
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
+    public String getCedula() { return cedula; }
+    public void setCedula(String cedula) { this.cedula = cedula; }
 }
