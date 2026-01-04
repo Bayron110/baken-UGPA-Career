@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface DocenteRepository extends MongoRepository<Docente, String> {
 
-    List<Docente> findByCarreraId(String carreraId);
+    List<Docente> findByCareerId(String careerId);
 
     Optional<Docente> findByCedula(String cedula);
 }

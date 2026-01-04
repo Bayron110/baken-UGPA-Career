@@ -8,10 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface CareerRespository extends MongoRepository<Career, String> {
-
-    // ✔️ Exacto
-    Optional<Career> findByNombre(String nombre);
-
-    // 🔥 NECESARIO para el Excel (sin problemas por mayúsculas / espacios)
-    Optional<Career> findByNombreIgnoreCase(String nombre);
 }
