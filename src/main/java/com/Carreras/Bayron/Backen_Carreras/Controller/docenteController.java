@@ -62,4 +62,9 @@ public class docenteController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/carrera/{carreraId}")
+    public ResponseEntity<List<docentes>> getDocentesByCarrera(@PathVariable String carreraId) {
+        return ResponseEntity.ok(docenteServicies.getDocentesByCarrera(carreraId));
+    }
+
 }

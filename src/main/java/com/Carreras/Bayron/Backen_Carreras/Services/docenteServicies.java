@@ -40,4 +40,9 @@ public class docenteServicies {
                 .stream()
                 .anyMatch(d -> d.getNombre().equalsIgnoreCase(nombre));
     }
+
+    public List<docentes> getDocentesByCarrera(String carreraId) {
+        return docentesRepository.findByCarreraId(carreraId);
+    }
+
 }
