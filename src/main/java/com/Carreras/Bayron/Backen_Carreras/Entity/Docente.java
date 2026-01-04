@@ -49,6 +49,6 @@ public class Docente {
     }
 
     public void setCedula(String cedula) {
-        cedula = cedula;
+        this.cedula = cedula;
     }
 }
