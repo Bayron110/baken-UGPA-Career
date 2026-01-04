@@ -7,64 +7,61 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/docentes")
+@CrossOrigin(origins = "*")
 public class docenteController {
 
     @Autowired
     private docenteServicies docenteServicies;
 
-    // Crear un docente
+    // ✅ Crear docente
     @PostMapping
-    public ResponseEntity<docentes> createDocente(@RequestBody docentes docente) {
-        docentes nuevoDocente = docenteServicies.saveDocente(docente);
-        return ResponseEntity.ok(nuevoDocente);
+    public ResponseEntity<?> crear(@RequestBody docentes docente) {
+        try {
+            return ResponseEntity.ok(docenteServicies.crearDocente(docente));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    // Obtener todos los docentes
+    // ✅ Obtener todos
     @GetMapping
-    public ResponseEntity<List<docentes>> getAllDocentes() {
-        List<docentes> lista = docenteServicies.getAllDocentes();
-        return ResponseEntity.ok(lista);
+    public ResponseEntity<List<docentes>> listar() {
+        return ResponseEntity.ok(docenteServicies.obtenerTodos());
     }
 
-    // Obtener un docente por ID
+    // ✅ Obtener por ID
     @GetMapping("/{id}")
-    public ResponseEntity<docentes> getDocenteById(@PathVariable String id) {
-        Optional<docentes> docente = docenteServicies.getDocenteById(id);
-        return docente.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> obtenerPorId(@PathVariable String id) {
+        return docenteServicies.obtenerPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // Actualizar un docente
+    // ✅ Obtener docentes por carrera
+    @GetMapping("/carrera/{careerId}")
+    public ResponseEntity<List<docentes>> obtenerPorCarrera(@PathVariable String careerId) {
+        return ResponseEntity.ok(docenteServicies.obtenerPorCarrera(careerId));
+    }
+
+    // ✅ Actualizar
     @PutMapping("/{id}")
-    public ResponseEntity<docentes> updateDocente(@PathVariable String id, @RequestBody docentes docente) {
-        Optional<docentes> existente = docenteServicies.getDocenteById(id);
-        if (existente.isPresent()) {
-            docente.setId(id);
-            docentes actualizado = docenteServicies.saveDocente(docente);
-            return ResponseEntity.ok(actualizado);
-        } else {
+    public ResponseEntity<?> actualizar(
+            @PathVariable String id,
+            @RequestBody docentes docente) {
+        try {
+            return ResponseEntity.ok(docenteServicies.actualizarDocente(id, docente));
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    // Eliminar un docente
+    // ✅ Eliminar
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDocente(@PathVariable String id) {
-        Optional<docentes> existente = docenteServicies.getDocenteById(id);
-        if (existente.isPresent()) {
-            docenteServicies.deleteDocente(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> eliminar(@PathVariable String id) {
+        docenteServicies.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
-    @GetMapping("/carrera/{carreraId}")
-    public ResponseEntity<List<docentes>> getDocentesByCarrera(@PathVariable String carreraId) {
-        return ResponseEntity.ok(docenteServicies.getDocentesByCarrera(carreraId));
-    }
-
 }
