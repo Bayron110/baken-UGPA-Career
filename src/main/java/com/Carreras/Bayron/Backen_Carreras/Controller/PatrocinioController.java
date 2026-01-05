@@ -6,6 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @RestController
 @RequestMapping("/api/pdf")
@@ -15,9 +18,13 @@ public class PatrocinioController {
     private ServicioPatrocinio servicioPatrocinio;
 
     @PostMapping("/convertir")
-    public ResponseEntity<byte[]> convertirWord(@RequestParam("ruta") String rutaWord) {
+    public ResponseEntity<byte[]> convertirWord(@RequestParam("file") MultipartFile file) {
         try {
-            byte[] pdfBytes = servicioPatrocinio.convertirWordAPdf(rutaWord);
+            // Guardar temporalmente el Word
+            File tempWord = File.createTempFile("patrocinio-", ".docx");
+            file.transferTo(tempWord);
+
+            byte[] pdfBytes = servicioPatrocinio.convertirWordAPdf(tempWord.getAbsolutePath());
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Patrocinio.pdf")
