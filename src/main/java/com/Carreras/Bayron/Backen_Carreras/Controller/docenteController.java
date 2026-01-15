@@ -40,16 +40,26 @@ public class docenteController {
 
     // Actualizar un docente
     @PutMapping("/{id}")
-    public ResponseEntity<docentes> updateDocente(@PathVariable String id, @RequestBody docentes docente) {
-        Optional<docentes> existente = docenteServicies.getDocenteById(id);
-        if (existente.isPresent()) {
-            docente.setId(id);
-            docentes actualizado = docenteServicies.saveDocente(docente);
-            return ResponseEntity.ok(actualizado);
-        } else {
+    public ResponseEntity<docentes> updateDocente(
+            @PathVariable String id,
+            @RequestBody docentes docente) {
+
+        Optional<docentes> existenteOpt = docenteServicies.getDocenteById(id);
+
+        if (existenteOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
+        docentes existente = existenteOpt.get();
+
+        // 🔒 PRESERVAR SECUENCIA
+        docente.setId(id);
+        docente.setSecuencia(existente.getSecuencia());
+
+        docentes actualizado = docenteServicies.saveDocente(docente);
+        return ResponseEntity.ok(actualizado);
     }
+
 
     // Eliminar un docente
     @DeleteMapping("/{id}")
@@ -66,5 +76,6 @@ public class docenteController {
     public ResponseEntity<List<docentes>> getDocentesByCarrera(@PathVariable String carreraId) {
         return ResponseEntity.ok(docenteServicies.getDocentesByCarrera(carreraId));
     }
+
 
 }

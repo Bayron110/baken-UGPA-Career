@@ -14,8 +14,16 @@ public class docenteServicies {
     @Autowired
     private docentesRepository docentesRepository;
 
-    // Crear o actualizar un docente
     public docentes saveDocente(docentes docente) {
+
+        if (docente.getId() == null) {
+
+            docentes ultimo = docentesRepository.findTopByOrderBySecuenciaDesc();
+            int siguiente = (ultimo == null) ? 1 : ultimo.getSecuencia() + 1;
+
+            docente.setSecuencia(siguiente);
+        }
+
         return docentesRepository.save(docente);
     }
 
@@ -34,15 +42,7 @@ public class docenteServicies {
         docentesRepository.deleteById(id);
     }
 
-    // Verificar si existe un docente por nombre (ejemplo adicional)
-    public boolean existsByNombre(String nombre) {
-        return docentesRepository.findAll()
-                .stream()
-                .anyMatch(d -> d.getNombre().equalsIgnoreCase(nombre));
-    }
-
     public List<docentes> getDocentesByCarrera(String carreraId) {
         return docentesRepository.findByCarreraId(carreraId);
     }
-
 }

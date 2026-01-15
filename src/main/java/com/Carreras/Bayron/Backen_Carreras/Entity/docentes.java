@@ -19,6 +19,8 @@ public class docentes {
 
     private String carreraId;
 
+    private Integer secuencia;
+
     // 🔹 Nuevos campos
     @NotBlank(message = "La cédula no puede estar vacía")
     private String cedula;
@@ -29,7 +31,7 @@ public class docentes {
     private String programa; // Ej: "Maestría en Educación", "Doctorado en Ciencias"
 
     private String estado;   // Ej: "Cursando", "Finalizado"
-
+    @Indexed(unique = true)
     private String periodo;  // Ej: "2022-2024", "2021-I"
 
     // ====== Getters y Setters ======
@@ -57,4 +59,12 @@ public class docentes {
 
     public String getPeriodo() { return periodo; }
     public void setPeriodo(String periodo) { this.periodo = periodo; }
+
+    public Integer getSecuencia() {
+        return secuencia;
+    }
+
+    public void setSecuencia(Integer secuencia) {
+        this.secuencia = secuencia;
+    }
 }

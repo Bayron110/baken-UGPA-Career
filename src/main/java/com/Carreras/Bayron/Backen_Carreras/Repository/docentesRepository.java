@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface docentesRepository  extends MongoRepository<docentes, String> {
     List<docentes> findByCarreraId(String carreraId);
+
+    docentes findTopByOrderBySecuenciaDesc();
 }
